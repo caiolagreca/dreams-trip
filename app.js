@@ -6,7 +6,8 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -44,8 +45,8 @@ app.use('/api', limiter);
 
 // Body parser, reading data from body iotn req.body
 app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({extended: true, limit: '10kb'}))
-app.use(cookieParser())
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(cookieParser());
 
 //Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
@@ -65,30 +66,31 @@ app.use(
       'price',
     ],
   })
+);
+
+app.use(compression());
+
+// Test middleware
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
+
+// 2) ROUTES
+app.use('/', viewsRouter);
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/bookings', bookingRouter);
+
+app.all('*', (req, res, next) => {
+  next(
+    new AppError(`Não consigo encontrar ${req.originalUrl} no servidor`, 404)
   );
-  
-  // Test middleware
-  app.use((req, res, next) => {
-    req.requestTime = new Date().toISOString();
-    next();
-  });
-  
-  // 2) ROUTES
-  app.use('/', viewsRouter);
-  app.use('/api/v1/tours', tourRouter);
-  app.use('/api/v1/users', userRouter);
-  app.use('/api/v1/reviews', reviewRouter);
-  app.use('/api/v1/bookings', bookingRouter);
-  
-  app.all('*', (req, res, next) => {
-    next(
-      new AppError(`Não consigo encontrar ${req.originalUrl} no servidor`, 404)
-      );
-    });
-    
-    app.use(globalErrorHandler);
-    
-    module.exports = app;
-    
-    // public doc API: https://documenter.getpostman.com/view/23578226/2s8YCgFDbL
-    
+});
+
+app.use(globalErrorHandler);
+
+module.exports = app;
+
+// public doc API: https://documenter.getpostman.com/view/23578226/2s8YCgFDbL
