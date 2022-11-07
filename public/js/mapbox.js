@@ -1,4 +1,3 @@
-
 export const displayMap = (locations) => {
   mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fpb2xhZ3JlY2EiLCJhIjoiY2w5d3ZramsyMDRkZjNvbjR6YmRxenU3byJ9.FDOTayupqve-8VkPvMU6ww';
 
@@ -29,7 +28,7 @@ locations.forEach(loc => {
     offset: 30
   })
   .setLngLat(loc.coordinates)
-  .setHTML(`<p>Day ${loc.day}: ${loc.description}</p>`)
+  .setHTML(`<p>Dia ${loc.day}: ${loc.description}</p>`)
   .addTo(map);
   
   // Extend map bounds to include current location

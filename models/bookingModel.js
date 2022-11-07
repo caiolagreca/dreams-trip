@@ -4,16 +4,16 @@ const bookingSchema = new mongoose.Schema({
   tour: {
     type: mongoose.Schema.ObjectId,
     ref: 'Tour',
-    required: [true, 'Booking must belong to a Tour!'],
+    required: [true, 'Booking deve pertencer a um Tour!'],
   },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    required: [true, 'Booking must belong to a User!'],
+    required: [true, 'Booking deve pertencer a um Usuário!'],
   },
   price: {
     type: Number,
-    required: [true, 'Booking must have a price'],
+    required: [true, 'Booking deve ter um preço'],
   },
   createdAt: {
     type: Date,

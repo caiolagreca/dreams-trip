@@ -17,7 +17,7 @@ const sendErrorDev = (err, req, res) => {
   } else {
     // RENDERED WEBSITE
     res.status(err.statusCode).render('error', {
-      title: 'Something went wrong!',
+      title: 'Algo deu erro!',
       msg: err.message
     })
   }
@@ -41,14 +41,14 @@ const sendErrorProd = (err, req, res) => {
       // 2) Send generic message
       res.status(500).json({
         status: 'error',
-        message: 'Algo deu errado',
+        message: 'Algo deu errado!',
       });
     }
   } else {
     // b) RENDERED WEBSITE
     if (err.isOperational) {
       res.status(err.statusCode).render('error', {
-        title: 'Something went wrong!',
+        title: 'Algo deu errado!',
         msg: err.message
       })
       
@@ -59,8 +59,8 @@ const sendErrorProd = (err, req, res) => {
       
       // 2) Send generic message
       res.status(err.statusCode).render('error', {
-        title: 'Something went wrong!',
-        msg: 'please, try again later'
+        title: 'Algo deu errado!',
+        msg: 'Por favor, tente novamente mais tarde.'
       })
     }
   }

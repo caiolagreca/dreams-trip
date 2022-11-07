@@ -56,14 +56,14 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 1) Check if email and password exist
   if (!email || !password) {
-    return next(new AppError('Please provide email and password', 400));
+    return next(new AppError('Por favor, insira seu email e senha', 400));
   }
 
   // 2) Check if user exists && password is correct
   const user = await User.findOne({ email }).select('+password');
 
   if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError('Email ou password incorreto', 401));
+    return next(new AppError('Email ou senha incorretos', 401));
   }
 
   // 3) If everything ok, send token to client
@@ -92,7 +92,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   if (!token) {
     return next(
-      new AppError('Você não está logado. Por favor, login para acessar.', 401)
+      new AppError('Você não está logado. Por favor, faça o login para acessar.', 401)
     );
   }
 
@@ -103,7 +103,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
     return next(
-      new AppError('O User pertencente a este token não existe mais.', 401)
+      new AppError('O usuário pertencente a este token não existe mais.', 401)
     );
   }
 
@@ -111,7 +111,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   if (currentUser.changedPasswordAfter(decoded.iat)) {
     return next(
       new AppError(
-        'User recentemente mudou o password. Por favor faça o login novamente.',
+        'O usuário recentemente mudou a senha. Por favor faça o login novamente.',
         401
       )
     );
@@ -169,7 +169,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return next(
-      new AppError('Não há nenhum User com este email cadastrado'),
+      new AppError('Não há nenhum usuário com este email cadastrado.'),
       404
     );
   }
@@ -187,7 +187,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
       status: 'success',
-      message: 'Token enviado ao email',
+      message: 'Token enviado ao email.',
     });
   } catch (error) {
     user.passwordResetToken = undefined;
@@ -216,7 +216,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   });
   // 2) If token has not expired, and there is user, set the new password
   if (!user) {
-    return next(new AppError('Token invalido ou foi expirado', 400));
+    return next(new AppError('Token invalido ou foi expirado.', 400));
   }
 
   // 3) Update changePasswordAt property fo the user
@@ -236,7 +236,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   // 2) Check if Posted current password is correct
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
-    return next(new AppError('Seu password atual esta errado', 401));
+    return next(new AppError('Sua senha atual esta errada.', 401));
   }
 
   // 3) If so, update password

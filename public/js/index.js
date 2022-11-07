@@ -43,7 +43,7 @@ if (userDataForm)
 if (userPasswordForm)
   userPasswordForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    document.querySelector('.btn--save-password').textContent = 'Updating...';
+    document.querySelector('.btn--save-password').textContent = 'Atualizando...';
 
     const passwordCurrent = document.getElementById('password-current').value;
     const password = document.getElementById('password').value;
@@ -53,7 +53,7 @@ if (userPasswordForm)
       'password'
     );
 
-    document.querySelector('.btn--save-password').textContent = 'Save password';
+    document.querySelector('.btn--save-password').textContent = 'Salvar senha';
     document.getElementById('password-current').value = '';
     document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
@@ -61,7 +61,7 @@ if (userPasswordForm)
 
 if (bookBtn)
   bookBtn.addEventListener('click', (e) => {
-    e.target.textContent = 'Processing...';
+    e.target.textContent = 'Processando...';
     const { tourId } = e.target.dataset;
     bookTour(tourId);
   });

@@ -18,7 +18,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
   // 2) Build template
   // 3) Render that template using tou data from 1)
   res.status(200).render('overview', {
-    title: 'All Tours',
+    title: 'Tours',
     tours,
   });
 });
@@ -30,7 +30,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
   });
 
   if (!tour) {
-    return next(new AppError('There is no tour with that name.', 404));
+    return next(new AppError('Não há Tours com este nome.', 404));
   }
 
   res.status(200).render('tour', {
@@ -41,13 +41,13 @@ exports.getTour = catchAsync(async (req, res, next) => {
 
 exports.getLoginForm = (req, res) => {
   res.status(200).render('login', {
-    title: 'Log into you account',
+    title: 'Login em sua conta',
   });
 };
 
 exports.getAccount = (req, res) => {
   res.status(200).render('account', {
-    title: 'Your account',
+    title: 'Sua Conta',
   });
 };
 
@@ -60,7 +60,7 @@ exports.getMyTours = catchAsync(async (req, res, next) => {
   const tours = await Tour.find({ _id: { $in: tourIDs } });
 
   res.status(200).render('overview', {
-    title: 'My Tours',
+    title: 'Meus Tours',
     tours,
   });
 });
@@ -79,7 +79,7 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
   );
 
   res.status(200).render('account', {
-    title: 'Your account',
+    title: 'Sua Conta',
     user: updatedUser,
   });
 });

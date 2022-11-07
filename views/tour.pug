@@ -20,12 +20,12 @@ block content
 
 		.heading-box
 			h1.heading-primary
-				span= `${tour.name} tour`
+				span= `${tour.name}`
 			.heading-box__group
 				.heading-box__detail
 					svg.heading-box__icon
 						use(xlink:href='/img/icons.svg#icon-clock')
-					span.heading-box__text= `${tour.duration} days`
+					span.heading-box__text= `${tour.duration} dias`
 				.heading-box__detail
 					svg.heading-box__icon
 						use(xlink:href='/img/icons.svg#icon-map-pin')
@@ -35,29 +35,29 @@ block content
 		.overview-box
 			div
 				.overview-box__group
-					h2.heading-secondary.ma-bt-lg Quick facts
+					h2.heading-secondary.ma-bt-lg Resumo
 
 					- const date = tour.startDates[0].toLocaleString('pt-br', {month: 'long', year: 'numeric'})
-					+overviewBox('Next date', date, 'calendar')
-					+overviewBox('Difficulty', tour.difficulty, 'trending-up')
-					+overviewBox('Participants', `${tour.maxGroupSize} pessoas`, 'user')
-					+overviewBox('Difficulty', `${tour.ratingsAverage} / 5`, 'star')
+					+overviewBox('Próxima Data', date, 'calendar')
+					+overviewBox('Dificuldade', tour.difficulty, 'trending-up')
+					+overviewBox('Capacidade', `${tour.maxGroupSize} pessoas`, 'user')
+					+overviewBox('Avaliações', `${tour.ratingsAverage} / 5`, 'star')
 
 				.overview-box__group
-					h2.heading-secondary.ma-bt-lg Your tour guides
+					h2.heading-secondary.ma-bt-lg Guias da Viagem
 
 					each guide in tour.guides
 						.overview-box__detail
 							img.overview-box__img(src=`/img/users/${guide.photo}`, alt=`${guide.name}`)
 
 							- if (guide.role === 'lead-guide')
-								span.overview-box__label Lead guide
+								span.overview-box__label Líder
 							- if (guide.role === 'guide')
-								span.overview-box__label Tour guide
+								span.overview-box__label Guia
 							span.overview-box__text= guide.name
 
 		.description-box
-			h2.heading-secondary.ma-bt-lg= `About ${tour.name} tour`
+			h2.heading-secondary.ma-bt-lg= `Sobre: ${tour.name}`
 			- const paragraphs = tour.description.split('\n')
 			each p in paragraphs
 				p.description__text= p
@@ -79,14 +79,14 @@ block content
 	section.section-cta
 		.cta
 			.cta__img.cta__img--logo
-				img(src='/img/logo-white.png', alt='Natours logo')
+				img(src='/img/logo-white.png', alt='AdventureTrip logo')
 			img.cta__img.cta__img--1(src=`/img/tours/${tour.images[1]}`, alt='Tour picture')
 			img.cta__img.cta__img--2(src=`/img/tours/${tour.images[2]}`, alt='Tour picture')
 			.cta__content
-				h2.heading-secondary What are you waiting for?
-				p.cta__text= `${tour.duration} days. 1 adventure. Infinite memories. Make it yours today!`
+				h2.heading-secondary O que você está esperando?
+				p.cta__text= `${tour.duration} dias. 1 aventura. Infinitas memórias. Faça acontecer!`
 
 				if user
-					button.btn.btn--green.span-all-rows#book-tour(data-tour-id=`${tour.id}`) Book tour now!
+					button.btn.btn--green.span-all-rows#book-tour(data-tour-id=`${tour.id}`) Reserve agora!
 				else
-					a.btn.btn--green.span-all-rows(href='/login') Log in to book tour
+					a.btn.btn--green.span-all-rows(href='/login') Login para reservar

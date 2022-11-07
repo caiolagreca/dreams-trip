@@ -7,7 +7,7 @@ exports.deleteOne = (Model) =>
     const doc = await Model.findByIdAndDelete(req.params.id);
 
     if (!doc) {
-      return next(new AppError('Nenhum documento encontrado com este ID', 404));
+      return next(new AppError('Nenhum documento encontrado com este ID.', 404));
     }
 
     res.status(204).json({
@@ -24,7 +24,7 @@ exports.updateOne = (Model) =>
     });
 
     if (!doc) {
-      return next(new AppError('Nenhum documento encontrado com este ID', 404));
+      return next(new AppError('Nenhum documento encontrado com este ID.', 404));
     }
 
     res.status(200).json({
@@ -52,7 +52,7 @@ exports.getOne = (Model, popOptions) =>
     const doc = await Model.findById(req.params.id).populate('reviews');
 
     if (!doc) {
-      return next(new AppError('Nenhum documento encontrado com este ID', 404));
+      return next(new AppError('Nenhum documento encontrado com este ID.', 404));
     }
 
     res.status(200).json({

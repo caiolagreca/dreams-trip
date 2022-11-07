@@ -5,22 +5,13 @@ const factory = require('./handlerFactory');
 const multer = require('multer');
 const sharp = require('sharp');
 
-/* const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/img/users')
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split('/')[1]
-    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`)
-  }
-}) */
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
     cb(null, true);
   } else {
-    cb(new AppError('Not an image! Please upload only images.', 400), false);
+    cb(new AppError('Por favor, faça o upload somente de imagens.', 400), false);
   }
 };
 
@@ -63,7 +54,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
-        'Esta rota não é para alterar password. Por favor utilize /updateMyPassword',
+        'Esta rota não é para alterar senha. Por favor utilize /updateMyPassword',
         400
       )
     );
@@ -99,7 +90,7 @@ exports.createUser = (req, res) => {
   res.status(500).json({
     status: 'error',
     message:
-      'Esta rota não foi definida. utilize a rota /signup para criar um User',
+      'Esta rota não foi definida. utilize a rota /signup para criar um usuário.',
   });
 };
 
