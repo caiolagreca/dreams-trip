@@ -29,7 +29,7 @@
   <li>Heroku</li>
 </ul>
 
-<h2>Project Author 😀</2>
+<h2>Project Author 😀</h2>
 <ul>
   <li>Caio Lagreca</li>
 </ul>
